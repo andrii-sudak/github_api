@@ -28,13 +28,7 @@ jobs:
 
       - name: Build Executable
         run: |
-          if [[ ${{ matrix.os }} == 'macos-13' ]]; then
-            pyinstaller --onefile main.py --name main-macos
-          elif [[ ${{ matrix.os }} == 'windows-2022' ]]; then
-            pyinstaller --onefile main.py --name main-windows.exe
-          else
-            pyinstaller --onefile main.py --name main-linux
-          fi
+          pyinstaller --onefile main.py --name main-${{ matrix.os }}
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
