@@ -11,28 +11,33 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-13]
+        os:
+        - macos-13
+        - ubuntu-22.04
+        - windows-2022
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11'
 
-      - name: Install Dependencies
+      - name: Set up Python and Install Dependencies
         run: |
           pip install -r requirements.txt
           pip install pyinstaller
 
       - name: Build Executable
         run: |
-          pyinstaller --onefile main.py
+          if [[ ${{ matrix.os }} == 'macos-13' ]]; then
+            pyinstaller --onefile main.py --name main-macos
+          elif [[ ${{ matrix.os }} == 'windows-2022' ]]; then
+            pyinstaller --onefile main.py --name main-windows.exe
+          else
+            pyinstaller --onefile main.py --name main-linux
+          fi
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/main
-          name: github_api-${{ runner.os }}
+          files: dist/main-${{ matrix.os }}*
+          name: github_api-${{ matrix.os }}
