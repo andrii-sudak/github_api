@@ -17,7 +17,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.11'
@@ -29,6 +29,10 @@ jobs:
       - name: Build Executable
         run: |
           pyinstaller --onefile main.py
+
+      - name: Rename Executable for OS
+        run: |
+          mv dist/main dist/github_api
 
       - name: Create Release
         id: create_release
