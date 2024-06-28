@@ -31,7 +31,7 @@ jobs:
           pyinstaller --onefile main.py
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          name: github_api-${{ runner.os }}
           files: dist/main
+          name: github_api-${{ runner.os }}
