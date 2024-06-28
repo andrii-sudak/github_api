@@ -28,7 +28,7 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --onefile github_api.py
+          pyinstaller --onefile main.py
 
       - name: Create Release
         id: create_release
