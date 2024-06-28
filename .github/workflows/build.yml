@@ -35,4 +35,3 @@ jobs:
         with:
           files: dist/main
           name: github_api-${{ runner.os }}
-          token: ${{ secrets.GH_TOKEN }}
