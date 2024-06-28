@@ -40,7 +40,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
-          files: dist/github_api
+          files: dist/main-${{ runner.os }}
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
