@@ -1,0 +1,34 @@
+name: Build GitHub App
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        pip install pyinstaller
+
+    - name: Build executable
+      run: |
+        pyinstaller --onefile github_api.py
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: github-app-${{ matrix.os }}
+        path: dist/github_api
