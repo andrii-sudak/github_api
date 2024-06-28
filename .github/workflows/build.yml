@@ -30,18 +30,8 @@ jobs:
         run: |
           pyinstaller --onefile main.py
 
-      - name: Rename Executable for OS
-        run: |
-          mv dist/main dist/github_api
-
       - name: Create Release
-        id: create_release
         uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
-          files: dist/main-${{ runner.os }}
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+          name: github_api-${{ runner.os }}
+          files: dist/main
